@@ -515,6 +515,10 @@ static int list(const struct last_control *ctl, struct utmpx *p, time_t logout_t
 	}
 
 	/*
+             CREATE CHECK IP FUNCTION HERE
+	*/
+	
+	/*
 	 *	Look up host with DNS if needed.
 	 */
 	r = -1;
