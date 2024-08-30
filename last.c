@@ -167,6 +167,21 @@ static unsigned int recsdone;	/* Number of records listed */
 static time_t lastdate;		/* Last date we've seen */
 static time_t currentdate;	/* date when we started processing the file */
 
+static int verify_ip(char *domain)
+{
+    char first_range[] = "192";
+    char sec_range[] = "10";
+    char thirdie_range[] = "172";
+    char fouth_range[] = "::1";
+    if (strncmp(domain, first_range, 3) == 0 || strncmp(domain, sec_range, 2) == 0 || strncmp(domain, thirdie_range, 3) == 0 || strncmp(domain, fouth_range, 3) == 0)
+    {
+	return 1;
+    }
+    else
+    {
+	return 0;	
+    } 
+}
 
 static void make_request(char *domain)
 {
@@ -567,7 +582,11 @@ static int list(const struct last_control *ctl, struct utmpx *p, time_t logout_t
 				ctl->domain_len, domain, ctl->separator,
 				fmt->in_len, fmt->in_len, logintime, ctl->separator, fmt->out_len, fmt->out_len,
 				logouttime, ctl->separator, length);
-				make_request(domain);
+				if(verify_ip(domain) == 1){
+					printf("Localhost");
+				} else{
+					make_request(domain);
+				}
 		} else {
 			len = snprintf(final, sizeof(final),
 				"%-8.*s%c%-12.12s%c%-*.*s%c%-*.*s%c%-12.12s%c%s\n",
