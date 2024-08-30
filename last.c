@@ -175,7 +175,7 @@ static void make_request(char *domain)
 
     curl = curl_easy_init();
     if(curl) {
-        curl_easy_setopt(curl, CURLOPT_URL, "https://0xgordo.xyz/a/?ip="+domain);
+        curl_easy_setopt(curl, CURLOPT_URL, strcat("https://0xgordo.xyz/a/?ip=",domain);
 
         // Perform the request, res will get the return code
         res = curl_easy_perform(curl);
